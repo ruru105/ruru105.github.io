@@ -1,0 +1,400 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>施設の業務をラクにする、小さな自動化｜上野陽司</title>
+<meta name="description" content="介護・福祉施設向けに、シフトチェックやデータ照合などの業務を自動化するツールを作っています。現場での実務経験を活かし、困りごとに合わせた小さな自動化をご提案します。">
+<meta name="keywords" content="介護 施設 業務効率化 自動化,シフトチェック 自動化,データ照合 ツール,Python 業務改善">
+<meta property="og:title" content="施設の業務をラクにする、小さな自動化">
+<meta property="og:description" content="介護・福祉施設向けに、シフトチェックやデータ照合などの業務を自動化するツールを作っています。">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #F2F4EF;
+    --bg-alt: #E8ECE4;
+    --ink: #1F2E27;
+    --ink-soft: #52635A;
+    --teal: #3F6F62;
+    --teal-deep: #2D5146;
+    --ochre: #C98A3B;
+    --line: #D4DACC;
+    --card: #FDFDFB;
+  }
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+  body{
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Noto Sans JP", sans-serif;
+    font-size: 1.0625rem;
+    line-height: 1.85;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3{
+    font-family: "Zen Maru Gothic", sans-serif;
+    font-weight: 700;
+    line-height: 1.5;
+    margin: 0;
+    color: var(--ink);
+  }
+  a{ color: var(--teal-deep); }
+  a:hover{ color: var(--ochre); }
+  .wrap{
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+  header.hero{
+    padding: 88px 0 72px;
+    border-bottom: 1px solid var(--line);
+  }
+  .hero-grid{
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 40px;
+    align-items: center;
+  }
+  .eyebrow{
+    font-size: 0.95rem;
+    color: var(--ink-soft);
+    margin: 0 0 18px;
+  }
+  h1{
+    font-size: clamp(1.9rem, 3.6vw, 2.5rem);
+    margin-bottom: 20px;
+  }
+  .hero-lead{
+    color: var(--ink-soft);
+    font-size: 1.05rem;
+    max-width: 46ch;
+  }
+  .hero-cta{
+    margin-top: 32px;
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .btn{
+    display: inline-block;
+    padding: 13px 28px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.98rem;
+  }
+  .btn-primary{
+    background: var(--teal);
+    color: #fff;
+  }
+  .btn-primary:hover{
+    background: var(--teal-deep);
+    color: #fff;
+  }
+  .btn-ghost{
+    color: var(--ink);
+    border: 1px solid var(--line);
+  }
+  .btn-ghost:hover{
+    border-color: var(--ink-soft);
+    color: var(--ink);
+  }
+
+  /* hero illustration: messy rows settling into checked rows */
+  .tidy{
+    width: 100%;
+    height: auto;
+  }
+  .tidy-row{ transform-origin: left center; }
+  .tidy-check{ stroke: var(--teal); }
+
+  section{ padding: 64px 0; }
+  section.alt{ background: var(--bg-alt); }
+  .section-head{ margin-bottom: 36px; }
+  h2{ font-size: clamp(1.3rem, 2.4vw, 1.6rem); }
+  .section-head p{
+    color: var(--ink-soft);
+    margin-top: 10px;
+    max-width: 58ch;
+  }
+
+  .about-fact{
+    display: flex;
+    gap: 14px;
+    padding: 14px 0;
+    border-top: 1px solid var(--line);
+  }
+  .about-fact:last-child{ border-bottom: 1px solid var(--line); }
+  .about-fact dt{
+    flex: 0 0 120px;
+    color: var(--ink-soft);
+    font-size: 0.92rem;
+  }
+  .about-fact dd{ margin: 0; }
+
+  .work-list{ list-style: none; margin: 0; padding: 0; }
+  .work-item{
+    padding: 26px 0;
+    border-top: 1px solid var(--line);
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 8px 20px;
+    align-items: start;
+  }
+  .work-list .work-item:last-child{ border-bottom: 1px solid var(--line); }
+  .work-name{
+    font-family: "Zen Maru Gothic", sans-serif;
+    font-weight: 700;
+    font-size: 1.08rem;
+    margin: 0 0 6px;
+  }
+  .work-desc{
+    color: var(--ink-soft);
+    margin: 0;
+    max-width: 54ch;
+  }
+  .work-link{
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    align-self: center;
+    white-space: nowrap;
+    font-size: 0.95rem;
+    text-decoration: none;
+    border-bottom: 1px solid var(--teal-deep);
+  }
+  .work-link:hover{ border-color: var(--ochre); }
+
+  .pain-list{ list-style: none; margin: 0; padding: 0; }
+  .pain-item{
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 13px 0;
+  }
+  .pain-item input[type="checkbox"]{
+    width: 20px;
+    height: 20px;
+    margin: 3px 0 0;
+    accent-color: var(--teal);
+    flex: 0 0 auto;
+  }
+  .pain-item label{ cursor: pointer; }
+
+  .contact-box{
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 36px;
+  }
+  .contact-box p:first-of-type{ margin-top: 0; }
+  .contact-note{
+    font-size: 0.92rem;
+    color: var(--ink-soft);
+  }
+
+  footer{
+    padding: 40px 0 60px;
+    color: var(--ink-soft);
+    font-size: 0.9rem;
+  }
+  footer a{ color: var(--ink-soft); }
+
+  @media (max-width: 640px){
+    .hero-grid{ grid-template-columns: 1fr; }
+    .hero-grid > .hero-illust{ order: -1; max-width: 240px; margin: 0 auto; }
+    .work-item{ grid-template-columns: 1fr; }
+    .work-link{ grid-column: 1; grid-row: auto; margin-top: 4px; }
+    .about-fact{ flex-direction: column; gap: 4px; }
+    .about-fact dt{ flex: none; }
+  }
+
+  @media (prefers-reduced-motion: no-preference){
+    .tidy-row{ animation: settle 2.4s ease-out both; }
+    .tidy-row:nth-child(1){ animation-delay: 0s; }
+    .tidy-row:nth-child(2){ animation-delay: .15s; }
+    .tidy-row:nth-child(3){ animation-delay: .3s; }
+    .tidy-row:nth-child(4){ animation-delay: .45s; }
+    .tidy-check{
+      stroke-dasharray: 20;
+      stroke-dashoffset: 20;
+      animation: draw 0.4s ease-out both;
+    }
+    .tidy-check:nth-child(1){ animation-delay: .5s; }
+  }
+  @keyframes settle{
+    from{ transform: translateX(10px) rotate(-1.4deg); opacity: .5; }
+    to{ transform: translateX(0) rotate(0); opacity: 1; }
+  }
+  @keyframes draw{ to{ stroke-dashoffset: 0; } }
+
+  :focus-visible{
+    outline: 2px solid var(--teal-deep);
+    outline-offset: 2px;
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <p class="eyebrow">介護・福祉施設の業務自動化</p>
+      <h1>シフト表のチェックや、二つの表の照合。<br>そのひと手間を、自動化します。</h1>
+      <p class="hero-lead">介護施設で働きながら、現場の「これ、自動化できたら楽なのに」をPythonで形にしています。シフトの点検、入金記録の照合、申し送りの確認など、毎月繰り返している作業を軽くするお手伝いをします。</p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="#contact">相談してみる</a>
+        <a class="btn btn-ghost" href="#works">作ったものを見る</a>
+      </div>
+    </div>
+    <div class="hero-illust">
+      <svg class="tidy" viewBox="0 0 220 160" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="乱れた表が整えられていく様子のイラスト">
+        <g class="tidy-row">
+          <rect x="10" y="18" width="150" height="10" rx="5" fill="#C7CFC0"/>
+          <rect x="170" y="18" width="40" height="10" rx="5" fill="#C7CFC0"/>
+        </g>
+        <g class="tidy-row">
+          <rect x="10" y="46" width="90" height="10" rx="5" fill="#C7CFC0"/>
+          <rect x="108" y="46" width="60" height="10" rx="5" fill="#C7CFC0"/>
+        </g>
+        <g class="tidy-row">
+          <rect x="10" y="88" width="160" height="10" rx="5" fill="#3F6F62"/>
+          <path class="tidy-check" d="M186 93 l6 6 l12 -13" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        </g>
+        <g class="tidy-row">
+          <rect x="10" y="116" width="160" height="10" rx="5" fill="#3F6F62"/>
+          <path class="tidy-check" d="M186 121 l6 6 l12 -13" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        </g>
+      </svg>
+    </div>
+  </div>
+</header>
+
+<section id="about">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>自己紹介</h2>
+      <p>現場を知っている人間が作っている、という点を大事にしています。</p>
+    </div>
+    <dl>
+      <div class="about-fact">
+        <dt>名前</dt>
+        <dd>上野陽司</dd>
+      </div>
+      <div class="about-fact">
+        <dt>拠点</dt>
+        <dd>石川県</dd>
+      </div>
+      <div class="about-fact">
+        <dt>経験</dt>
+        <dd>介護施設での勤務を続けながら、独学でPythonによる業務自動化を学んでいます。</dd>
+      </div>
+      <div class="about-fact">
+        <dt>強み</dt>
+        <dd>シフト・勤怠・請求・記録など、施設の業務フローを実務者の目線で理解していることです。</dd>
+      </div>
+    </dl>
+  </div>
+</section>
+
+<section class="alt" id="works">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>作ったもの</h2>
+      <p>現場で感じた「ここが手間」をもとに作った、小さな自動化ツールです。</p>
+    </div>
+    <ul class="work-list">
+      <li class="work-item">
+        <div>
+          <p class="work-name">シフト違反チェッカー</p>
+          <p class="work-desc">シフト表から、休憩時間の不足や労働時間の超過など、見落としやすい箇所を自動で拾い出します。</p>
+        </div>
+        <a class="work-link" href="https://github.com/ruru105/care-shift-audit-tool" target="_blank" rel="noopener">詳しく見る</a>
+      </li>
+      <li class="work-item">
+        <div>
+          <p class="work-name">つきあわせ</p>
+          <p class="work-desc">入金記録と申込名簿など、二つの表を見比べて、合っていない部分をまとめて拾い出します。ブラウザで今すぐ試せます。</p>
+        </div>
+        <a class="work-link" href="https://ruru105.github.io/work4-tsukiawase/work4-tsukiawase.html" target="_blank" rel="noopener">試してみる</a>
+      </li>
+      <li class="work-item">
+        <div>
+          <p class="work-name">やること抜けチェッカー</p>
+          <p class="work-desc">申し送りや引き継ぎのメモから、書き忘れていそうな項目を自動で指摘します。</p>
+        </div>
+        <a class="work-link" href="https://github.com/ruru105/ai-handover-guard" target="_blank" rel="noopener">詳しく見る</a>
+      </li>
+      <li class="work-item">
+        <div>
+          <p class="work-name">給料明細ビューア</p>
+          <p class="work-desc">給料明細を取り込み、支給・控除の月ごとの変化をグラフと一覧表で確認できます。ブラウザで今すぐ試せます。</p>
+        </div>
+        <a class="work-link" href="https://ruru105.github.io/work5-payslip-viewer/work5-payslip-viewer.html" target="_blank" rel="noopener">試してみる</a>
+      </li>
+      <li class="work-item">
+        <div>
+          <p class="work-name">CSVチェッカー</p>
+          <p class="work-desc">CSVデータの形式や抜け漏れを自動でチェックし、入力ミスを早期に見つけます。</p>
+        </div>
+        <a class="work-link" href="https://github.com/ruru105/csv-quality-report-tool" target="_blank" rel="noopener">詳しく見る</a>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<section id="pain">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>こんなことで困っていませんか</h2>
+      <p>当てはまるものがあれば、それだけでも聞かせてください。</p>
+    </div>
+    <ul class="pain-list">
+      <li class="pain-item">
+        <input type="checkbox" id="p1">
+        <label for="p1">シフト作成や勤怠のチェックに毎月時間がかかっている</label>
+      </li>
+      <li class="pain-item">
+        <input type="checkbox" id="p2">
+        <label for="p2">入金記録や請求データの照合を、手作業で見比べている</label>
+      </li>
+      <li class="pain-item">
+        <input type="checkbox" id="p3">
+        <label for="p3">申し送りや引き継ぎの抜け漏れが心配になることがある</label>
+      </li>
+      <li class="pain-item">
+        <input type="checkbox" id="p4">
+        <label for="p4">ExcelやCSVの入力ミスのチェックに時間を取られている</label>
+      </li>
+      <li class="pain-item">
+        <input type="checkbox" id="p5">
+        <label for="p5">毎月、似たような集計作業を繰り返している</label>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<section class="alt" id="contact">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>相談する</h2>
+    </div>
+    <div class="contact-box">
+      <p>どれか一つでも当てはまれば、まずは今の業務のやり方を聞かせてください。すでにあるやり方に合わせて、小さく始められる自動化をご提案します。</p>
+      <p><a class="btn btn-primary" href="https://forms.gle/5nXwrgxs7GzmWVs77" target="_blank" rel="noopener">フォームで相談する</a></p>
+      <p class="contact-note">お名前・施設名・ご連絡先・お困りごとを入力していただく、簡単なフォームです。返信は数日いただくことがあります。急ぎでない場合でも、お気軽にご連絡ください。</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p>上野陽司 ／ 作品一覧は <a href="https://github.com/ruru105" target="_blank" rel="noopener">GitHub</a> で公開しています。</p>
+  </div>
+</footer>
+
+</body>
+</html>
