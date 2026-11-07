@@ -190,6 +190,15 @@
     color: var(--teal-deep);
     border-bottom-color: var(--teal-deep);
   }
+  .featured-badge{
+    display: inline-block;
+    background: var(--ochre);
+    color: #fff;
+    font-size: 0.72rem;
+    padding: 3px 10px;
+    border-radius: 999px;
+    margin-bottom: 8px;
+  }
 
   .pain-list{ list-style: none; margin: 0; padding: 0; }
   .pain-item{
@@ -341,20 +350,21 @@
     <ul class="work-list">
       <li class="work-item">
         <div>
+          <span class="featured-badge">注目・開発中</span>
+          <p class="work-name">作品2:シフト違反チェッカー(Care Shift Audit Tool)</p>
+          <p class="work-desc">シフト表から、休憩時間の不足や労働時間の超過など、見落としやすい箇所を自動で拾い出します。不足が見つかった枠については、調整案を検討材料としてあわせて提示します(最終的な配置のご判断はご担当者様にお任せします)。※現在も機能を改良中のツールです。ココナラでのサービス化は準備中で、まずはご相談から承れます。</p>
+        </div>
+        <a class="work-link" href="https://github.com/ruru105/work2-care-shift-audit-tool" target="_blank" rel="noopener">詳しく見る</a>
+      </li>
+      <li class="work-item">
+        <div>
           <p class="work-name">作品1:CSVチェッカー(CSV Checker)</p>
-          <p class="work-desc">CSVデータの形式や抜け漏れを自動でチェックし、入力ミスを早期に見つけます。</p>
+          <p class="work-desc">入力はCSV/Excelファイルだけ。欠損・重複・形式の崩れを自動検出し、見やすいExcelレポートでお渡しします。目視でのチェック作業が不要になります。</p>
         </div>
         <div class="work-links">
           <a class="work-link" href="https://github.com/ruru105/work1-csv-quality-report-tool" target="_blank" rel="noopener">詳しく見る</a>
           <a class="work-link work-link-coconala" href="https://coconala.com/services/4479281" target="_blank" rel="noopener">ココナラで依頼する</a>
         </div>
-      </li>
-      <li class="work-item">
-        <div>
-          <p class="work-name">作品2:シフト違反チェッカー(Care Shift Audit Tool)</p>
-          <p class="work-desc">シフト表から、休憩時間の不足や労働時間の超過など、見落としやすい箇所を自動で拾い出します。不足が見つかった枠については、調整案を検討材料としてあわせて提示します(最終的な配置のご判断はご担当者様にお任せします)。</p>
-        </div>
-        <a class="work-link" href="https://github.com/ruru105/work2-care-shift-audit-tool" target="_blank" rel="noopener">詳しく見る</a>
       </li>
       <li class="work-item">
         <div>
@@ -366,7 +376,7 @@
       <li class="work-item">
         <div>
           <p class="work-name">作品4:つきあわせ(CSV Diff Tool)</p>
-          <p class="work-desc">入金記録と申込名簿など、二つの表を見比べて、合っていない部分をまとめて拾い出します。ブラウザで今すぐ試せます。</p>
+          <p class="work-desc">入力は2つの表(CSV/Excel)だけ。表記ゆれや金額の過不足を自動で検出し、結果を一覧でお渡しします。手作業での見比べが不要になります。ブラウザで今すぐ試せます。</p>
         </div>
         <div class="work-links">
           <a class="work-link" href="https://ruru105.github.io/work4-tsukiawase/work4-tsukiawase.html" target="_blank" rel="noopener">試してみる</a>
