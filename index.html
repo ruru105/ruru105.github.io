@@ -168,6 +168,29 @@
   }
   .work-link:hover{ border-color: var(--ochre); }
 
+  .work-links{
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    align-self: center;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+  }
+  .work-links .work-link{
+    grid-column: auto;
+    grid-row: auto;
+    align-self: auto;
+  }
+  .work-link-coconala{
+    color: var(--ochre);
+    border-bottom-color: var(--ochre);
+  }
+  .work-link-coconala:hover{
+    color: var(--teal-deep);
+    border-bottom-color: var(--teal-deep);
+  }
+
   .pain-list{ list-style: none; margin: 0; padding: 0; }
   .pain-item{
     display: flex;
@@ -208,6 +231,7 @@
     .hero-grid > .hero-illust{ order: -1; max-width: 240px; margin: 0 auto; }
     .work-item{ grid-template-columns: 1fr; }
     .work-link{ grid-column: 1; grid-row: auto; margin-top: 4px; }
+    .work-links{ grid-column: 1; grid-row: auto; align-items: flex-start; margin-top: 4px; }
     .about-fact{ flex-direction: column; gap: 4px; }
     .about-fact dt{ flex: none; }
   }
@@ -320,7 +344,10 @@
           <p class="work-name">作品1:CSVチェッカー(CSV Checker)</p>
           <p class="work-desc">CSVデータの形式や抜け漏れを自動でチェックし、入力ミスを早期に見つけます。</p>
         </div>
-        <a class="work-link" href="https://github.com/ruru105/work1-csv-quality-report-tool" target="_blank" rel="noopener">詳しく見る</a>
+        <div class="work-links">
+          <a class="work-link" href="https://github.com/ruru105/work1-csv-quality-report-tool" target="_blank" rel="noopener">詳しく見る</a>
+          <a class="work-link work-link-coconala" href="https://coconala.com/services/4479281" target="_blank" rel="noopener">ココナラで依頼する</a>
+        </div>
       </li>
       <li class="work-item">
         <div>
@@ -341,7 +368,10 @@
           <p class="work-name">作品4:つきあわせ(CSV Diff Tool)</p>
           <p class="work-desc">入金記録と申込名簿など、二つの表を見比べて、合っていない部分をまとめて拾い出します。ブラウザで今すぐ試せます。</p>
         </div>
-        <a class="work-link" href="https://ruru105.github.io/work4-tsukiawase/work4-tsukiawase.html" target="_blank" rel="noopener">試してみる</a>
+        <div class="work-links">
+          <a class="work-link" href="https://ruru105.github.io/work4-tsukiawase/work4-tsukiawase.html" target="_blank" rel="noopener">試してみる</a>
+          <a class="work-link work-link-coconala" href="https://coconala.com/services/4479339" target="_blank" rel="noopener">ココナラで依頼する</a>
+        </div>
       </li>
       <li class="work-item">
         <div>
@@ -369,7 +399,10 @@
           <p class="work-name">作品8:時系列データ異常検知ツール(Time Series Anomaly Detector)</p>
           <p class="work-desc">売上・アクセス数などの時系列データから、いつもと違う動きを自動で見つけます。曜日ごとの傾向を踏まえて判定するので、土日と平日で水準が違うデータでも誤検出しにくくなっています。</p>
         </div>
-        <a class="work-link" href="https://github.com/ruru105/work8-time-series-anomaly-detector" target="_blank" rel="noopener">詳しく見る</a>
+        <div class="work-links">
+          <a class="work-link" href="https://github.com/ruru105/work8-time-series-anomaly-detector" target="_blank" rel="noopener">詳しく見る</a>
+          <a class="work-link work-link-coconala" href="https://coconala.com/services/4479359" target="_blank" rel="noopener">ココナラで依頼する</a>
+        </div>
       </li>
     </ul>
   </div>
